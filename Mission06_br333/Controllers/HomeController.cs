@@ -12,10 +12,13 @@ namespace Mission06_br333.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private MovieFormContext _formContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger)
+        //Constructor. We now pass the _formContext too
+        public HomeController(ILogger<HomeController> logger, MovieFormContext name)
         {
             _logger = logger;
+            _formContext = name;
         }
 
         public IActionResult Index()
@@ -44,6 +47,11 @@ namespace Mission06_br333.Controllers
         [HttpPost]
         public IActionResult MovieForm(FormResponse fr)
         {
+            //add and save data to the DB
+            _formContext.Add(fr);
+            _formContext.SaveChanges();
+
+            //return the confirmation page view
             return View("Confirmation");
         }
 

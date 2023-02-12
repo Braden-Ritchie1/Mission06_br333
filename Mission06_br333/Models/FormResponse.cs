@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace Mission06_br333.Models
 {
+    //The FormID is the primary key
+    //this class contains the inputs for each item in the form with getters and setters. There are also certain fields that are requried and one the has a length limit.
     public class FormResponse
     {
+        [Key]
+        [Required]
+        public int FormID { get; set; }
+
         [Required]
         public string Category { get; set; }
 
