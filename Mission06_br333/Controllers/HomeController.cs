@@ -47,12 +47,20 @@ namespace Mission06_br333.Controllers
         [HttpPost]
         public IActionResult MovieForm(FormResponse fr)
         {
-            //add and save data to the DB
-            _formContext.Add(fr);
-            _formContext.SaveChanges();
+            //set condition to check for valid form input so the program
+            if (ModelState.IsValid)
+            {
+                //add and save data to the DB
+                _formContext.Add(fr);
+                _formContext.SaveChanges();
+                //return the confirmation page view
+                return View("Confirmation", fr);
+            }
+            else
+            {
+                return View(fr);
+            }
 
-            //return the confirmation page view
-            return View("Confirmation");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
