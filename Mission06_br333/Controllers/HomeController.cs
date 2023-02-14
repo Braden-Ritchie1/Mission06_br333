@@ -11,13 +11,11 @@ namespace Mission06_br333.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MovieFormContext _formContext { get; set; }
 
         //Constructor. We now pass the _formContext too
-        public HomeController(ILogger<HomeController> logger, MovieFormContext name)
+        public HomeController(MovieFormContext name)
         {
-            _logger = logger;
             _formContext = name;
         }
 
@@ -26,10 +24,6 @@ namespace Mission06_br333.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         //This action displays the Podcast Page
         public IActionResult Podcast()
@@ -63,10 +57,10 @@ namespace Mission06_br333.Controllers
 
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        //action for the Movie List page
+        public IActionResult MovieList()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }
