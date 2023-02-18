@@ -2,6 +2,8 @@
     ViewData["Title"] = "Movie List";
 }
 
+@model List<FormResponse>
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -16,5 +18,21 @@
         </tr>
     </thead>
 
+    <tbody>
+        @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.Category</td>
+                    <td>@x.Title</td>
+                    <td>@x.Year</td>
+                    <td>@x.Director</td>
+                    <td>@x.Rating</td>
+                    <td>@x.Lent_to</td>
+                    <td>@x.Edited</td>
+                    <td>@x.Notes</td>
+                </tr>
+            }
+
+    </tbody>
 
 </table>

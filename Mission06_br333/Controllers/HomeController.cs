@@ -47,6 +47,7 @@ namespace Mission06_br333.Controllers
                 //add and save data to the DB
                 _formContext.Add(fr);
                 _formContext.SaveChanges();
+
                 //return the confirmation page view
                 return View("Confirmation", fr);
             }
@@ -60,7 +61,9 @@ namespace Mission06_br333.Controllers
         //action for the Movie List page
         public IActionResult MovieList()
         {
-            return View();
+            var apps = _formContext.responses.ToList();
+
+            return View(apps);
         }
     }
 }
