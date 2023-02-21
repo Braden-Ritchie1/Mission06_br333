@@ -8,7 +8,7 @@ using Mission06_br333.Models;
 namespace Mission06_br333.Migrations
 {
     [DbContext(typeof(MovieFormContext))]
-    [Migration("20230212223017_Initial")]
+    [Migration("20230221010335_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,15 +17,70 @@ namespace Mission06_br333.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
+            modelBuilder.Entity("Mission06_br333.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("category");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Miscellaneous"
+                        },
+                        new
+                        {
+                            CategoryID = 7,
+                            CategoryName = "Television"
+                        },
+                        new
+                        {
+                            CategoryID = 8,
+                            CategoryName = "VHS"
+                        });
+                });
+
             modelBuilder.Entity("Mission06_br333.Models.FormResponse", b =>
                 {
                     b.Property<int>("FormID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -54,13 +109,15 @@ namespace Mission06_br333.Migrations
 
                     b.HasKey("FormID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             FormID = 1,
-                            Category = "Action/Adventure",
+                            CategoryID = 1,
                             Director = "Denis Villaneuve",
                             Edited = false,
                             Lent_to = "Braden",
@@ -72,7 +129,7 @@ namespace Mission06_br333.Migrations
                         new
                         {
                             FormID = 2,
-                            Category = "Action/Adventure",
+                            CategoryID = 1,
                             Director = "James Cameron",
                             Edited = false,
                             Lent_to = "Braden",
@@ -84,15 +141,24 @@ namespace Mission06_br333.Migrations
                         new
                         {
                             FormID = 3,
-                            Category = "Action/Adventure",
+                            CategoryID = 1,
                             Director = "James Cameron",
                             Edited = false,
                             Lent_to = "Braden",
                             Notes = "My favorite older movie.",
                             Rating = "PG-13",
                             Title = "Avatar",
-                            Year = (short)2021
+                            Year = (short)2009
                         });
+                });
+
+            modelBuilder.Entity("Mission06_br333.Models.FormResponse", b =>
+                {
+                    b.HasOne("Mission06_br333.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

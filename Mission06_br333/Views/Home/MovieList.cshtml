@@ -4,8 +4,9 @@
 
 @model List<FormResponse>
 
-<table class="table table-bordered">
-    <thead>
+<!--Table for viewing movies-->
+<table class="table table-bordered table-striped">
+    <thead class="font-weight-bold">
         <tr>
             <td>Category</td>
             <td>Title</td>
@@ -21,8 +22,9 @@
     <tbody>
         @foreach (var x in Model)
             {
+            <!--Print out the column values-->
                 <tr>
-                    <td>@x.Category</td>
+                    <td>@x.Category.CategoryName</td>
                     <td>@x.Title</td>
                     <td>@x.Year</td>
                     <td>@x.Director</td>
@@ -30,6 +32,10 @@
                     <td>@x.Lent_to</td>
                     <td>@x.Edited</td>
                     <td>@x.Notes</td>
+
+                    <!--Edit and Delete options-->
+                    <td><a asp-controller="Home" asp-action="Edit" asp-route-id="@x.FormID">Edit</a></td>
+                    <td><a asp-controller="Home" asp-action="Delete" asp-route-id="@x.FormID">Delete</a></td>
                 </tr>
             }
 

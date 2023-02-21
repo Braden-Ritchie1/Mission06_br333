@@ -7,8 +7,19 @@
 <div>
     <!--This is the form that the user can input their new movies into-->
     <form method="post">
-        <label asp-for="Category">Category</label>
-        <input asp-for="Category"/><br />
+        <div asp-validation-summary="All"></div>
+
+        <input asp-for="FormID" type="hidden"/>
+
+        <!--Setting up the cateogry to be associated with its ID and making the drop down-->
+        <label asp-for="CategoryID">Category</label>
+        <select asp-for="CategoryID">
+            <option value="">Select a Category</option>
+            @foreach (Category c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryID">@c.CategoryName</option>
+            }
+        </select><br />
 
         <label asp-for="Title">Title</label>
         <input asp-for="Title"/><br />

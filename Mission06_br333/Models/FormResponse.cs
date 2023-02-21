@@ -14,19 +14,21 @@ namespace Mission06_br333.Models
         [Required]
         public int FormID { get; set; }
 
-        [Required]
-        public string Category { get; set; }
+        //Building the FK relationship for the broken out Category table
+        [Required (ErrorMessage = "Please enter a Category")]
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "Please enter a Title")]
         public string Title { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "Please enter a Year")]
         public short Year { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "Please enter a Director")]
         public string Director { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "Please enter a Rating")]
         public string Rating { get; set; }
 
         public string Lent_to { get; set; }

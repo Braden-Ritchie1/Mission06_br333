@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission06_br333.Models;
 using System;
@@ -35,7 +36,8 @@ namespace Mission06_br333.Controllers
         [HttpGet]
         public IActionResult MovieForm()
         {
-            return View();
+            ViewBag.Categories = _formContext.category.ToList();
+            return View(new FormResponse());
         }
 
         [HttpPost]
@@ -53,6 +55,7 @@ namespace Mission06_br333.Controllers
             }
             else
             {
+                ViewBag.Categories = _formContext.category.ToList();
                 return View(fr);
             }
 
@@ -61,9 +64,58 @@ namespace Mission06_br333.Controllers
         //action for the Movie List page
         public IActionResult MovieList()
         {
-            var apps = _formContext.responses.ToList();
+            var apps = _formContext.responses
+                .Include(x => x.Category)
+                .ToList();
 
             return View(apps);
         }
+
+        //Edit Action
+        [HttpGet]
+        public IActionResult Edit (int id)
+        {
+            ViewBag.Categories = _formContext.category.ToList();
+
+            var app = _formContext.responses.Single(x => x.FormID == id);
+
+            return View("MovieForm", app);
+        }
+
+        [HttpPost]
+        public IActionResult Edit (FormResponse fr2)
+        {
+            if (ModelState.IsValid)
+            {
+                _formContext.Update(fr2);
+                _formContext.SaveChanges();
+
+                return RedirectToAction("MovieList");
+            }
+            else
+            {
+                ViewBag.Categories = _formContext.category.ToList();
+                return View(fr2);
+            }
+        }
+
+        //Delete Action
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var app = _formContext.responses.Single(x => x.FormID == id);
+
+            return View(app);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(FormResponse fr3)
+        {
+            _formContext.responses.Remove(fr3);
+            _formContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
+        }
+
     }
 }
